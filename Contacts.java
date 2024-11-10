@@ -1,14 +1,14 @@
 package com.addressbook;
 
 public class Contacts {
-    String firstName;
-    String lastName;
-    String address;
-    String city;
-    String state;
-    String zipNumber;
-    String phoneNum;
-    String emailId;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String city;
+    private String state;
+    private String zipNumber;
+    private String phoneNum;
+    private String emailId;
 
     public Contacts(String firstName, String lastName, String address, String city, String state, String zipNumber, String phoneNum, String emailId) {
         this.firstName = firstName;
