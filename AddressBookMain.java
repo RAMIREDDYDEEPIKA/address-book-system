@@ -1,13 +1,15 @@
 package com.addressbook;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class AddressBookMain {
+
     public static void main(String[] args) {
-        System.out.println("Welcome to Address Book!");
-        Scanner sc=new Scanner(System.in);
-        Contacts[] details = new Contacts[100];  // Array to hold contacts
-        int contactCount = 0;
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Contacts> addressBook = new ArrayList<>();  // List to store contacts
+        int contactCount = 0;  // Counter to track number of contacts added
+
         while (true) {
             System.out.println("\n1. Add Contact");
             System.out.println("2. Edit Contact by Name");
@@ -40,14 +42,10 @@ public class AddressBookMain {
                 // Create new contact with the provided details
                 Contacts contact = new Contacts(firstName, lastName, address, city, state, zipNumber, phoneNum, emailId);
 
-                // Add the contact to the array
-                if (contactCount < details.length) {
-                    details[contactCount] = contact;
-                    contactCount++;
-                    System.out.println("Contact added: " + contact);
-                } else {
-                    System.out.println("Address book is full. Cannot add more contacts.");
-                }
+                // Add the contact to the address book (ArrayList)
+                addressBook.add(contact);
+                contactCount++;
+                System.out.println("Contact added: " + contact);
 
             } else if (option == 2) {
                 // Edit an existing contact by name
@@ -57,31 +55,31 @@ public class AddressBookMain {
                 String editLastName = sc.nextLine();
 
                 boolean contactFound = false;
-                for (int i = 0; i < contactCount; i++) {
-                    if (details[i].getFirstName().equalsIgnoreCase(editFirstName) &&
-                            details[i].getLastName().equalsIgnoreCase(editLastName)) {
+                for (Contacts contact : addressBook) {
+                    if (contact.getFirstName().equalsIgnoreCase(editFirstName) &&
+                            contact.getLastName().equalsIgnoreCase(editLastName)) {
                         contactFound = true;
-                        System.out.println("Editing contact: " + details[i]);
+                        System.out.println("Editing contact: " + contact);
 
                         // Ask for new details and update the contact
                         System.out.print("New First Name: ");
-                        details[i].setFirstName(sc.nextLine());
+                        contact.setFirstName(sc.nextLine());
                         System.out.print("New Last Name: ");
-                        details[i].setLastName(sc.nextLine());
+                        contact.setLastName(sc.nextLine());
                         System.out.print("New Address: ");
-                        details[i].setAddress(sc.nextLine());
+                        contact.setAddress(sc.nextLine());
                         System.out.print("New City: ");
-                        details[i].setCity(sc.nextLine());
+                        contact.setCity(sc.nextLine());
                         System.out.print("New State: ");
-                        details[i].setState(sc.nextLine());
+                        contact.setState(sc.nextLine());
                         System.out.print("New Zip Code: ");
-                        details[i].setZipNumber(sc.nextLine());
+                        contact.setZipNumber(sc.nextLine());
                         System.out.print("New Phone Number: ");
-                        details[i].setPhoneNum(sc.nextLine());
+                        contact.setPhoneNum(sc.nextLine());
                         System.out.print("New Email ID: ");
-                        details[i].setEmailId(sc.nextLine());
+                        contact.setEmailId(sc.nextLine());
 
-                        System.out.println("Contact updated: " + details[i]);
+                        System.out.println("Contact updated: " + contact);
                         break;
                     }
                 }
@@ -89,6 +87,7 @@ public class AddressBookMain {
                 if (!contactFound) {
                     System.out.println("Contact with name " + editFirstName + " " + editLastName + " not found.");
                 }
+
             } else if (option == 3) {
                 // Delete an existing contact by name
                 System.out.print("Enter the First Name of the contact to delete: ");
@@ -97,17 +96,15 @@ public class AddressBookMain {
                 String deleteLastName = sc.nextLine();
 
                 boolean contactFound = false;
-                for (int i = 0; i < contactCount; i++) {
-                    if (details[i].getFirstName().equalsIgnoreCase(deleteFirstName) &&
-                            details[i].getLastName().equalsIgnoreCase(deleteLastName)) {
+                for (int i = 0; i < addressBook.size(); i++) {
+                    Contacts contact = addressBook.get(i);
+                    if (contact.getFirstName().equalsIgnoreCase(deleteFirstName) &&
+                            contact.getLastName().equalsIgnoreCase(deleteLastName)) {
                         contactFound = true;
-                        System.out.println("Deleting contact: " + details[i]);
+                        System.out.println("Deleting contact: " + contact);
 
-                        // Shift all contacts after the deleted one
-                        for (int j = i; j < contactCount - 1; j++) {
-                            details[j] = details[j + 1];
-                        }
-                        details[contactCount - 1] = null;  // Clear the last contact
+                        // Remove the contact from the address book
+                        addressBook.remove(i);
                         contactCount--;  // Decrement contact count
                         System.out.println("Contact deleted.");
                         break;
@@ -123,8 +120,8 @@ public class AddressBookMain {
 
             // Display all contacts after each operation
             System.out.println("\nAll Contacts:");
-            for (int i = 0; i < contactCount; i++) {
-                System.out.println(details[i]);
+            for (Contacts contact : addressBook) {
+                System.out.println(contact);
             }
 
             // Ask if the user wants to continue
@@ -134,7 +131,7 @@ public class AddressBookMain {
                 break;
             }
         }
-        sc.close();
+
+        sc.close();  // Close the scanner at the end
     }
 }
-
