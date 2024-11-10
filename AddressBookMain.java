@@ -11,6 +11,7 @@ public class AddressBookMain {
         while (true) {
             System.out.println("\n1. Add Contact");
             System.out.println("2. Edit Contact by Name");
+            System.out.println("3. Delete Contact by Name");
             System.out.print("Choose an option: ");
             int option = sc.nextInt();
             sc.nextLine();  // Consume the newline character
@@ -88,6 +89,34 @@ public class AddressBookMain {
                 if (!contactFound) {
                     System.out.println("Contact with name " + editFirstName + " " + editLastName + " not found.");
                 }
+            } else if (option == 3) {
+                // Delete an existing contact by name
+                System.out.print("Enter the First Name of the contact to delete: ");
+                String deleteFirstName = sc.nextLine();
+                System.out.print("Enter the Last Name of the contact to delete: ");
+                String deleteLastName = sc.nextLine();
+
+                boolean contactFound = false;
+                for (int i = 0; i < contactCount; i++) {
+                    if (details[i].getFirstName().equalsIgnoreCase(deleteFirstName) &&
+                            details[i].getLastName().equalsIgnoreCase(deleteLastName)) {
+                        contactFound = true;
+                        System.out.println("Deleting contact: " + details[i]);
+
+                        // Shift all contacts after the deleted one
+                        for (int j = i; j < contactCount - 1; j++) {
+                            details[j] = details[j + 1];
+                        }
+                        details[contactCount - 1] = null;  // Clear the last contact
+                        contactCount--;  // Decrement contact count
+                        System.out.println("Contact deleted.");
+                        break;
+                    }
+                }
+
+                if (!contactFound) {
+                    System.out.println("Contact with name " + deleteFirstName + " " + deleteLastName + " not found.");
+                }
             } else {
                 System.out.println("Invalid option. Please try again.");
             }
@@ -105,7 +134,6 @@ public class AddressBookMain {
                 break;
             }
         }
-
         sc.close();
     }
 }
