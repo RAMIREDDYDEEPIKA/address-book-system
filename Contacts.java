@@ -1,14 +1,14 @@
 package com.addressbook;
 
 public class Contacts {
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String state;
-    private String zipNumber;
-    private String phoneNum;
-    private String emailId;
+    public String firstName;
+    public String lastName;
+    public String address;
+    public String city;
+    public String state;
+    public String zipNumber;
+    public String phoneNum;
+    public String emailId;
 
     public Contacts(String firstName, String lastName, String address, String city, String state, String zipNumber, String phoneNum, String emailId) {
         this.firstName = firstName;
@@ -18,70 +18,6 @@ public class Contacts {
         this.state = state;
         this.zipNumber = zipNumber;
         this.phoneNum = phoneNum;
-        this.emailId = emailId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipNumber() {
-        return zipNumber;
-    }
-
-    public void setZipNumber(String zipNumber) {
-        this.zipNumber = zipNumber;
-    }
-
-    public String getPhoneNum() {
-        return phoneNum;
-    }
-
-    public void setPhoneNum(String phoneNum) {
-        this.phoneNum = phoneNum;
-    }
-
-    public String getEmailId() {
-        return emailId;
-    }
-
-    public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
 
@@ -97,5 +33,19 @@ public class Contacts {
                 ", phoneNum='" + phoneNum + '\'' +
                 ", emailId='" + emailId + '\'' +
                 '}';
+    }
+
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Contacts contacts = (Contacts) obj;
+        return firstName.equals(contacts.firstName) && lastName.equals(contacts.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        return result;
     }
 }
